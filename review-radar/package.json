@@ -1,0 +1,11 @@
+{
+  "name": "review-radar",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Review sentiment hackathon demo built entirely with JavaScript",
+  "scripts": {
+    "train": "node scripts/train.js",
+    "start": "node scripts/serve.js"
+  },
+  "engines": { "node": ">=18" }
+}

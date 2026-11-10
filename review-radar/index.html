@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#171616">
+<meta name="description" content="Review Radar classifies customer reviews as positive, negative or mixed with a trained TF-IDF + logistic regression model that runs in your browser.">
+<title>Review Radar — Every review has a feeling</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='16' fill='%23e4e24e'/%3E%3Cpath d='M5 16h5l3-8 5 16 3-8h6' fill='none' stroke='%23100f0f' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;900&family=Instrument+Serif:ital@1&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script defer src="negation.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<div class="page dark" id="top">
+<header class="nav"><a href="#top" class="brand">review<i>radar</i></a><span class="pill ghost-dark" role="status"><span class="dot" id="statusDot"></span><span id="modelStatus">Loading model…</span></span></header>
+<div class="hero">
+<h1>Every review<br class="m"> has a <em>feeling.</em></h1>
+<p class="sub">Paste a review. A trained model reads the mood — and tells you when it isn’t sure.</p>
+<span class="tag t1" aria-hidden="true"><b></b>+ POSITIVE 86%</span><span class="tag t2" aria-hidden="true"><b></b>− NEGATIVE 74%</span>
+</div>
+<main class="analyzer" id="analyze">
+<div class="in">
+<label for="reviewInput" class="eyebrow dk">Your customer review</label>
+<div class="ta"><textarea id="reviewInput" maxlength="2000" rows="3" placeholder="e.g. The product arrived so quickly, and the quality completely exceeded my expectations." aria-describedby="inputHelp inputError"></textarea><div class="cc"><span id="inputHelp">English reviews work best · ⌘/Ctrl + Enter</span><span id="cc"><span id="charCount">0</span> / 2000</span></div></div>
+
+<div class="chips">
+<button type="button" class="pill ghost" data-review="The garlic bread was not bad!">Negation test</button>
+<button type="button" class="pill ghost" data-review="The quality is fantastic and the delivery was super quick. I absolutely love it!">Great experience</button>
+<button type="button" class="pill ghost" data-review="Terrible customer service. The product stopped working after two days. Very disappointed.">Bad experience</button>
+<button type="button" class="pill ghost" data-review="The design looks nice but the battery is disappointing and the app freezes often.">Mixed feedback</button>
+<button type="button" class="pill ghost" data-review="Oh great, another update that broke everything. Just what I needed.">Sarcasm trap</button>
+</div>
+<div class="row"><button class="pill cta" id="analyzeBtn" type="button" disabled>Analyze sentiment</button><button class="pill ghost" id="clearBtn" type="button">Clear</button></div>
+<p class="err" id="inputError" role="alert" hidden></p>
+</div>
+<div class="out s-empty" id="resultsPanel" aria-live="polite">
+<div class="top"><span>Analysis report</span><span id="reportNum">Ready when you are</span></div>
+<div id="emptyState" class="empty"><h3>Your result <em>lives here.</em></h3><p>Enter a review and press analyze.</p></div>
+<div id="resultContent" hidden>
+<p class="eyebrow sm">Detected sentiment</p>
+<h2 id="verdictText">Positive</h2>
+<p id="resultDescription" class="desc"></p>
+<div class="meter"><div class="bar" aria-hidden="true"><i id="positiveBar"></i></div><div class="legend"><span id="positiveScore">Positive 0%</span><span id="negativeScore">Negative 0%</span></div></div>
+<ul id="notes" class="notes"></ul>
+<p id="reasonText" class="why"></p>
+<button id="explainBtn" class="pill ghost" type="button">Ask Gemini for a deeper take</button>
+<p class="ai" id="aiReply" hidden></p>
+</div>
+</div>
+</main>
+<p class="fine">Demo model · <span id="acc">≈84% on a held-out split</span> · scores are estimates, not guarantees · sarcasm &amp; non-English can fool it.</p>
+</div>
+</body>
+</html>
